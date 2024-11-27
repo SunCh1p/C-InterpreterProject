@@ -1,10 +1,15 @@
-#include "./headers/tokenizer.h"
+#include "./headers/parser.h"
 
 int main(){
-  std::string dave = "1+2+3342+4/5||";
-  std::vector<Token> res = Tokenizer::getInstance().tokenize(dave,0);
-  for(auto item: res){
-      item.print();
-  }
+  std::string input = "";
+  do{
+    std::cout << ">>> ";
+    std::getline(std::cin, input);
+    if(input != "exit"){
+      std::vector<Token> tokens = Tokenizer::getInstance().tokenize(input, 0);
+      //Builder* builder = new ASTBuilder();
+      //Parser p(builder, tokens);
+    }
+  }while(input != "exit");
   return 0;
 }

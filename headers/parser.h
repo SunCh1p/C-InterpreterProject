@@ -12,51 +12,52 @@ class Builder{
     virtual ASTNode* buildExpression() = 0;
     virtual ASTNode* buildTerm() = 0;
     virtual ASTNode* buildFactor() = 0;
-    virtual ASTNode* buildIntLiteral(int val) = 0;
+    virtual ASTNode* buildIntLiteral() = 0;
 };
 
 //concrete builder
 class ASTBuilder: Builder{
   public:
     ASTBuilder(class Parser* parser): m_parser(parser){}
-    //<expression> ::= <term> {("+" | "-") <term>}
-    ASTNode* buildExpression() override{
 
-    }
+    //<expression> ::= <term> {("+" | "-") <term>}
+    ASTNode* buildExpression() override;
+
     //<term> ::= <factor> {("*" | "/") <factor>}
     ASTNode* buildTerm() override;
+
     //<factor> ::= <number> | "(" <expression> ")"
     ASTNode* buildFactor() override;
-    ASTNode* buildIntLiteral(int val) override;
+
+    //Int Literal
+    ASTNode* buildIntLiteral() override;
+
   private:
     class Parser* m_parser;
 };
 //Parser-Director
 class Parser{
   public:
-    Parser(Builder* builder, std::vector<Token> tokens):
-      m_builder(builder), m_tokens(tokens){}
+    Parser(Builder* builder, std::vector<Token> tokens);
+
+    //destructor
+    ~Parser(){delete m_root;}
 
     //increment index
     void increment(){m_index++;}
     //get token
     Token getToken(){return m_tokens[m_index];}
+    //check if remaining tokens
+    bool allTokens(){return !(m_index >= m_tokens.size());}
     //parse tokens and turn into AST
-    ASTNode* parse(){
-      if(m_builder == nullptr){
-        return nullptr;
-      }
-      if(m_root != nullptr){
-        delete m_root;
-      }
-      m_root = m_builder->buildExpression();
-      return m_root;
-    }
+    ASTNode* parse();
+    //reset 
+    void reset(std::vector<Token> tokens);
   private:
-    int m_index = 0;
-    Builder* m_builder = nullptr;
+    int m_index;
+    Builder* m_builder;
     std::vector<Token> m_tokens;
-    ASTNode* m_root = nullptr;
+    ASTNode* m_root;
 
 };
 

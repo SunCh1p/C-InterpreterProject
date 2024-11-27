@@ -19,7 +19,9 @@ enum class TokenType{
   ASSIGN,
   AND,
   OR,
-  NOT
+  NOT,
+  LPAREN,
+  RPAREN,
 };
 
 class Token{

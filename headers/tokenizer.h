@@ -24,7 +24,10 @@ const std::vector<std::pair<std::regex, TokenType>> patterns = {
   {std::regex(R"(=)"), TokenType::ASSIGN},
   {std::regex(R"(&&)"), TokenType::AND},
   {std::regex(R"(\|\|)"), TokenType::OR},
-  {std::regex(R"(!)"), TokenType::NOT}
+  {std::regex(R"(!)"), TokenType::NOT},
+  {std::regex(R"(\()"), TokenType::LPAREN},
+  {std::regex(R"(\))"), TokenType::RPAREN},
+
 };
 
 //implemented as a meyers singleton for not reason but the lols
