@@ -6,9 +6,9 @@
 
 /*
   EBNF
-    <expression> ::= <term> {("+" | "-") <term>}
-    <term> ::= <factor> {("*" | "/") <factor>}
-    <factor> ::= <number> | "(" <expression> ")"
+    1<expression> ::= <term> {("+" | "-") <term>}
+    2<term> ::= <factor> {("*" | "/") <factor>}
+    3<factor> ::= <number> | "(" <expression> ")"
 */
 //ast can be represented using the composite design pattern
 /*
@@ -28,6 +28,7 @@ class Expression: public ASTNode{
   public:
     Expression(ASTNode* left, char o, ASTNode* right):
       m_left(left), m_op(o), m_right(right){};
+    ~Expression(){delete m_left, delete m_right;}
     ASTNode* getLeft() const{return m_left;}
     ASTNode* getRight() const{return m_right;}
     char getOp() const{return m_op;}
@@ -42,6 +43,7 @@ class Term: public ASTNode{
   public:
     Term(ASTNode* left, char o, ASTNode* right):
       m_left(left), m_op(o), m_right(right){};
+    ~Term(){delete m_left, delete m_right;};
     int accept(class Visitor* visitor) const override;
     ASTNode* getLeft() const{return m_left;}
     ASTNode* getRight() const{return m_right;}
@@ -55,6 +57,7 @@ class Term: public ASTNode{
 class Factor: public ASTNode{
   public:
     Factor(ASTNode* node): m_node(node){}
+    ~Factor(){delete m_node;}
 
     int accept(class Visitor* visitor) const override;
     ASTNode* getNode() const{return m_node;}
