@@ -46,6 +46,8 @@ ASTNode* ASTBuilder::buildTerm(){
 }
 
 //<factor> ::= <number> | "(" <expression> ")"
+//this is the old code you had 
+/*
 ASTNode* ASTBuilder::buildFactor(){
   Token token = m_parser->getToken();
   if(token.getType() == TokenType::NUMBER){
@@ -66,14 +68,51 @@ ASTNode* ASTBuilder::buildFactor(){
     throw std::runtime_error("Unexpected Token");
   }
 }
+*/
+ASTNode* ASTBuilder::buildFactor() {
+    Token token = m_parser->getToken();
+    if (token.getType() == TokenType::NUMBER) {
+        return buildIntLiteral();
+    } else if (token.getType() == TokenType::LPAREN) {
+        m_parser->increment();  // Consume '('
+        ASTNode* node = buildExpression();
+        Token closingToken = m_parser->getToken();
+        if (closingToken.getType() != TokenType::RPAREN) {
+            throw std::runtime_error("Expected closing parenthesis, but got: " + closingToken.getVal());
+        }
+        m_parser->increment();  // Consume ')'
+        return new Factor(node);
+    } else {
+        throw std::runtime_error("Unexpected token in factor: " + token.getVal());
+    }
+}
+
 
 //Int Literal
+
+// this is the old code  you had 
+/*
 ASTNode* ASTBuilder::buildIntLiteral(){
   Token token = m_parser->getToken();
   ASTNode* node = new IntLiteral(std::stoi(token.getVal()));
   m_parser->increment();
   return node;
+}*/
+
+ASTNode* ASTBuilder::buildIntLiteral() {
+    Token token = m_parser->getToken();
+    try {
+        int value = std::stoi(token.getVal());
+        ASTNode* node = new IntLiteral(value);
+        m_parser->increment();
+        return node;
+    } catch (const std::invalid_argument& e) {
+        throw std::runtime_error("Invalid integer literal: " + token.getVal());
+    } catch (const std::out_of_range& e) {
+        throw std::runtime_error("Integer literal out of range: " + token.getVal());
+    }
 }
+
 
 /*
   Director
