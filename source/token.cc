@@ -2,8 +2,20 @@
 
 void Token::print() const {
     switch(getType()){
+        case TokenType::COMMENT:
+            std::cout << "Comment ";
+            break;
+        case TokenType::WHITESPACE:
+            std::cout << "Whitespace ";
+            break;
         case TokenType::NUMBER:
             std::cout << "Number ";
+            break;
+        case TokenType::STRING:
+            std::cout << "String ";
+            break;
+        case TokenType::FUNCTION:
+            std::cout << "Function ";
             break;
         case TokenType::ADD:
             std::cout << "Add ";
@@ -44,13 +56,24 @@ void Token::print() const {
         case TokenType::NOT:
             std::cout << "Not ";
             break;
-        case TokenType::STRING:
-            std::cout<<"String ";
-            break;
         default:
             break;
     }
     std::cout << getVal();
     std::cout << " Row: " << getRow();
     std::cout << " Col: " << getCol() << std::endl;
+}
+
+bool Token::operator==(const Token& other) const{
+    bool res = true;
+    if(m_Type != other.getType()){
+        res = false;
+    } else if(m_Val != other.getVal()){
+        res = false;
+    } else if(m_Col != other.getCol()){
+        res = false;
+    } else if(m_Row != other.getRow()){
+        res = false;
+    }
+    return res;
 }

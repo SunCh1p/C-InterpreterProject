@@ -1,4 +1,34 @@
 #include "../headers/tokenizer.h"
+//global list of regex patterns for tokenization
+const std::vector<std::pair<std::regex, TokenType>> patterns = {
+  //numbers = 0
+  {std::regex(R"(\/\/[^\n]*)"), TokenType::COMMENT},
+  {std::regex(R"(\s+)"), TokenType::WHITESPACE},
+  {std::regex(R"(true|false)"), TokenType::BOOLEAN},
+  {std::regex(R"(null)"), TokenType::NULL_LITERAL},
+  {std::regex(R"(function)"), TokenType::FUNCTION},
+  {std::regex(R"(return)"), TokenType::RETURN},
+  {std::regex(R"((\d+\.\d*)|(\d*\.\d+)|(\d+))"),TokenType::NUMBER},
+  {std::regex(R"([^"\\\s]*)"), TokenType::STRING},
+  //operators
+  {std::regex(R"(\+)"), TokenType::ADD},
+  {std::regex(R"(\-)"), TokenType::SUBTRACT},
+  {std::regex(R"(\*)"), TokenType::MULTIPLY},
+  {std::regex(R"(\/)"), TokenType::DIVIDE},
+  {std::regex(R"(==)"), TokenType::EQUAL},
+  {std::regex(R"(!=)"), TokenType::NOTEQUAL},
+  {std::regex(R"(>=)"), TokenType::GREATEREQUAL},
+  {std::regex(R"(<=)"), TokenType::LESSEQUAL},
+  {std::regex(R"(>)"), TokenType::GREATER},
+  {std::regex(R"(<)"), TokenType::LESS},
+  {std::regex(R"(=)"), TokenType::ASSIGN},
+  {std::regex(R"(&&)"), TokenType::AND},
+  {std::regex(R"(\|\|)"), TokenType::OR},
+  {std::regex(R"(!)"), TokenType::NOT},
+  {std::regex(R"(\()"), TokenType::LPAREN},
+  {std::regex(R"(\))"), TokenType::RPAREN},
+
+};
 
 Tokenizer& Tokenizer::getInstance(){
   static Tokenizer singleton;
@@ -18,9 +48,9 @@ std::vector<Token> Tokenizer::tokenize(std::string input, int row){
 
   while(position < input.length()){
     bool matched = false;
-
     std::smatch match;
     std::string subStr = input.substr(position);
+
     for(const auto& pattern: patterns){
       if(std::regex_search(subStr, match, pattern.first) && match.position() == 0){
           tokenStream.push_back(Token(pattern.second, match.str(), row, position));

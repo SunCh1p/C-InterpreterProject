@@ -13,12 +13,15 @@ class Builder{
     virtual ASTNode* buildTerm() = 0;
     virtual ASTNode* buildFactor() = 0;
     virtual ASTNode* buildIntLiteral() = 0;
+    virtual void addParser(class Parser* parser) = 0;
 };
 
-//concrete builder
-class ASTBuilder: Builder{
+//concrete builder + 
+class ASTBuilder: public Builder{
   public:
-    ASTBuilder(class Parser* parser): m_parser(parser){}
+    ASTBuilder(){}
+
+    void addParser(class Parser* parser) override{m_parser=parser;}
 
     //<expression> ::= <term> {("+" | "-") <term>}
     ASTNode* buildExpression() override;
@@ -46,9 +49,11 @@ class Parser{
     //increment index
     void increment(){m_index++;}
     //get token
-    Token getToken(){return m_tokens[m_index];}
+    Token getToken(){
+      return m_tokens[m_index];
+    }
     //check if remaining tokens
-    bool allTokens(){return !(m_index >= m_tokens.size());}
+    bool tokensLeft(){return m_index < m_tokens.size();}
     //parse tokens and turn into AST
     ASTNode* parse();
     //reset 

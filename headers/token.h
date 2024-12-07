@@ -5,23 +5,51 @@
 #include <iostream>
 
 enum class TokenType{
-  NUMBER=0,
+  COMMENT = 0,
+  WHITESPACE,
+  NUMBER,
+  STRING,
+  BOOLEAN,
+  NULL_LITERAL,
+  FUNCTION,
+  RETURN,
+  //IF,
+  //ELSE,
+  //WHILE,
+  //FOR,
+  //BREAK,
+  //CONTINUE,
+  //PRINT,
+  //IMPORT,
+  //EXTERNAL,
+  //INPUT,
+  //EXIT,
+  //IDENTIFIER,
   ADD,
   SUBTRACT,
   MULTIPLY,
   DIVIDE,
+  LPAREN,
+  RPAREN,
+  //LBRAC,
+  //RBRAC,
   EQUAL,
   NOTEQUAL,
   LESSEQUAL,
   GREATEREQUAL,
   LESS,
   GREATER,
-  ASSIGN,
   AND,
   OR,
   NOT,
-  LPAREN,
-  RPAREN,
+  ASSIGN,
+  //DOT,
+  //LSBRAC,
+  //RSBRAC,
+  //COMMA,
+  //COLON,
+  //SCOLON,
+  //ERROR,
 };
 
 class Token{
@@ -35,6 +63,7 @@ class Token{
     std::string getVal() const{return m_Val;}
     int getRow() const{return m_Row;}
     int getCol() const{return m_Col;}
+    bool operator==(const Token& other) const;
 
     //print
     void print() const;

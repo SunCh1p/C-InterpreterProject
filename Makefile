@@ -5,29 +5,36 @@ PROGRAM := trivial
 #sources
 SOURCES:= $(wildcard source/*.cc)
 OBJECTS:= $(SOURCES:source/%.cc=obj/%.o)
-.PHONY: build run clean
+.PHONY: build run clean test buildtest
 
 run: build
 	@./$(PROGRAM)
 
 #linker logs
 build: obj/main.o $(OBJECTS)
-	@$(CXX) $(CXXFLAGS) $^ -o $(PROGRAM) > linker.txt
+	@$(CXX) $(CXXFLAGS) $^ -o $(PROGRAM)
 
 #compile
 obj/main.o: main.cc
-	@$(CXX) $(CXXFLAGS) -c $< -o $@ > compile.txt
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 #compile
 ./obj/%.o: source/%.cc
-	@$(CXX) $(CXXFLAGS) -c $< -o $@ > compile_source.txt
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 debug:
 	@gdb ./program
 
+test: buildtest
+	@./test/testProgram
+
+buildtest: obj/test.o $(OBJECTS)
+	@$(CXX) $(CXXFLAGS) $^ -o ./test/testProgram
+
+obj/test.o: test/test.cc
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
+
 clean:
 	@rm -f ./$(PROGRAM) 
 	@rm -f ./obj/*.o
-	@rm -f ./logs/compile.txt
-	@rm -f ./logs/compile_source.txt
-	@rm -f ./logs/linker.txt
+	@rm -f ./test/testProgram
