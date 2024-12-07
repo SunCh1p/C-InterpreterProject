@@ -44,6 +44,9 @@ void Token::print() const {
         case TokenType::NOT:
             std::cout << "Not ";
             break;
+        case TokenType::STRING:
+            std::cout<<"String ";
+            break;
         default:
             break;
     }
