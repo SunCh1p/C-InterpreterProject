@@ -8,6 +8,19 @@ const std::vector<std::pair<std::regex, TokenType>> patterns = {
   {std::regex(R"(null)"), TokenType::NULL_LITERAL},
   {std::regex(R"(function)"), TokenType::FUNCTION},
   {std::regex(R"(return)"), TokenType::RETURN},
+  
+  {std::regex(R"(if)"), TokenType::IF},
+  {std::regex(R"(else)"), TokenType::ELSE},
+  {std::regex(R"(while)"), TokenType::WHILE},
+  {std::regex(R"(for)"), TokenType::FOR},
+  {std::regex(R"(break)"), TokenType::BREAK},
+  {std::regex(R"(continue)"), TokenType::CONTINUE},
+  {std::regex(R"(print)"), TokenType::PRINT},
+  {std::regex(R"(import)"), TokenType::IMPORT},
+  {std::regex(R"(external)"), TokenType::EXTERNAL},
+  {std::regex(R"(input)"), TokenType::INPUT},
+  {std::regex(R"(exit)"), TokenType::EXIT},
+
   {std::regex(R"((\d+\.\d*)|(\d*\.\d+)|(\d+))"),TokenType::NUMBER},
   {std::regex(R"([^"\\\s]*)"), TokenType::STRING},
   //operators
