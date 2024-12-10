@@ -56,6 +56,21 @@ void Token::print() const {
         case TokenType::NOT:
             std::cout << "Not ";
             break;
+        case TokenType::BOOLEAN:
+            std::cout << "Boolean ";
+            break;
+        case TokenType::NULL_LITERAL:
+            std::cout << "NullLiteral ";
+            break;
+        case TokenType::RETURN:
+            std::cout << "Return ";
+            break;
+        case TokenType::LPAREN:
+            std::cout << "LeftParen ";
+            break;
+        case TokenType::RPAREN:
+            std::cout << "RightParen ";
+            break;
         default:
             break;
     }

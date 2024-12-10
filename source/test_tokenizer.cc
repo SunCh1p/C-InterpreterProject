@@ -135,6 +135,36 @@ void testTokenizerExit(){
   auto s = Tokenizer::getInstance().tokenize("exit",0);
   assert(testToken == s[0]);
 }
+void testTokensBoolean() {
+  std::cout << "Running testTokensBoolean()" << std::endl;
+  Token testToken(TokenType::BOOLEAN, "true", 0, 0);
+  auto s = Tokenizer::getInstance().tokenize("true", 0);
+  assert(testToken == s[0]);
+  std::cout << "testTokensBoolean passed." << std::endl;
+}
+
+void testTokenizerNullLiteral() {
+  std::cout << "Running testTokenizerNullLiteral()" << std::endl;
+  Token testToken(TokenType::NULL_LITERAL, "null", 0, 0);
+  auto s = Tokenizer::getInstance().tokenize("null", 0);
+  assert(testToken == s[0]);
+  std::cout << "testTokenizerNullLiteral passed." << std::endl;
+}
+void testTokenizerLParen() {
+    std::cout << "Running testTokenizerLParen()" << std::endl;
+    Token testToken(TokenType::LPAREN, "(", 0, 0);
+    auto s = Tokenizer::getInstance().tokenize("(", 0);
+    assert(testToken == s[0]);
+    std::cout << "testTokenizerLParen passed." << std::endl;
+}
+
+void testTokenizerRParen() {
+    std::cout << "Running testTokenizerRParen()" << std::endl;
+    Token testToken(TokenType::RPAREN, ")", 0, 0);
+    auto s = Tokenizer::getInstance().tokenize(")", 0);
+    assert(testToken == s[0]);
+    std::cout << "testTokenizerRParen passed." << std::endl;
+}
 // void TestTokens(){
 //     Token testToken(TokenType::STRING, "absdefghijklmnpqrstuvwxyz",1,2);
 //     assert(testToken.getVal() == "absdefghijklmnpqrstuvwxyz");
