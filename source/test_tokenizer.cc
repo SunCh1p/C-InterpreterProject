@@ -6,26 +6,26 @@
 
  //Token(TokenType type, std::string val, int row, int col): 
 void testTokenizeComment(){
-  std::cout << "Running testTokenizeComment" << std::endl;
-  Token testToken(TokenType::COMMENT, "//", 0, 0);
-  auto s = Tokenizer::getInstance().tokenize("//",0);
+  std::cout << "Running testTokenizeComment()" << std::endl;
+  Token testToken(TokenType::COMMENT, "#", 0, 0);
+  auto s = Tokenizer::getInstance().tokenize("#",0);
   assert(testToken == s[0]);
-  testToken = Token(TokenType::COMMENT, "//asdfa asdf hi asd",0,0);
-  s = Tokenizer::getInstance().tokenize("//asdfa asdf hi asd",0);
+  testToken = Token(TokenType::COMMENT, "#asdfa asdf hi asd",0,0);
+  s = Tokenizer::getInstance().tokenize("#asdfa asdf hi asd",0);
   assert(testToken == s[0]);
 }
 
 void testTokenizeWhiteSpace(){
-  std::cout << "Running testTokenizerWhiteSpace" << std::endl;
+  std::cout << "Running testTokenizerWhiteSpace()" << std::endl;
   Token testToken(TokenType::WHITESPACE, " ", 0, 0);
   auto s = Tokenizer::getInstance().tokenize(" ",0);
   assert(testToken == s[0]);
 }
 
 void testTokenizeString(){
-  std::cout << "Running testTokenizeString" << std::endl;
-  Token testToken(TokenType::STRING, "asdf", 0,0);
-  auto s = Tokenizer::getInstance().tokenize("asdf",0);
+  std::cout << "Running testTokenizeString()" << std::endl;
+  Token testToken(TokenType::STRING, "\"asdf\"", 0,0);
+  auto s = Tokenizer::getInstance().tokenize("\"asdf\"",0);
   assert(testToken == s[0]);
 }
 
@@ -46,7 +46,7 @@ void testTokenizerNullLiteral(){
 }
 
 void testTokenizerFunction(){
-  std::cout << "Running testTokenizerFunction" << std::endl;
+  std::cout << "Running testTokenizerFunction()" << std::endl;
   Token testToken(TokenType::FUNCTION, "function",0,1);
   auto s = Tokenizer::getInstance().tokenize(" function asdf",0);
   assert(testToken == s[1]);
@@ -135,57 +135,238 @@ void testTokenizerExit(){
   auto s = Tokenizer::getInstance().tokenize("exit",0);
   assert(testToken == s[0]);
 }
-void testTokensBoolean() {
-  std::cout << "Running testTokensBoolean()" << std::endl;
-  Token testToken(TokenType::BOOLEAN, "true", 0, 0);
-  auto s = Tokenizer::getInstance().tokenize("true", 0);
-  assert(testToken == s[0]);
-  std::cout << "testTokensBoolean passed." << std::endl;
-}
 //there is problem in L and R paren need to be fixed 
 void testTokenizerLParen() {
-    std::cout << "Running testTokenizerLParen()" << std::endl;
-    Token testToken(TokenType::LPAREN, "(", 0, 0);
-    auto s = Tokenizer::getInstance().tokenize("(", 0);
-    assert(testToken == s[0]);
-    std::cout << "testTokenizerLParen passed." << std::endl;
+  std::cout << "Running testTokenizerLParen()" << std::endl;
+  Token testToken(TokenType::LPAREN, "(", 0, 0);
+  auto s = Tokenizer::getInstance().tokenize("(", 0);
+  assert(testToken == s[0]);
 }
 
 void testTokenizerRParen() {
-    std::cout << "Running testTokenizerRParen()" << std::endl;
-    Token testToken(TokenType::RPAREN, ")", 0, 0);
-    auto s = Tokenizer::getInstance().tokenize(")", 0);
-    assert(testToken == s[0]);
-    std::cout << "testTokenizerRParen passed." << std::endl;
+  std::cout << "Running testTokenizerRParen()" << std::endl;
+  Token testToken(TokenType::RPAREN, ")", 0, 0);
+  auto s = Tokenizer::getInstance().tokenize(")", 0);
+  assert(testToken == s[0]);
 }
-// void TestTokens(){
-//     Token testToken(TokenType::STRING, "absdefghijklmnpqrstuvwxyz",1,2);
-//     assert(testToken.getVal() == "absdefghijklmnpqrstuvwxyz");
-    
-// }
+
+void testTokenizerAdd(){
+  std::cout << "Running testTokenizerAdd()" << std::endl;
+  Token testToken(TokenType::ADD, "+", 0,6);
+  auto s = Tokenizer::getInstance().tokenize(" a2 2 +",0);
+  assert(testToken == s[5]);
+}
+
+void testTokenizerSubtract(){
+  std::cout << "Running testTokenizerSubtract()" << std::endl;
+  Token testToken(TokenType::SUBTRACT, "-", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("+/-",0);
+  assert(testToken == s[2]);
+}
+
+void testTokenizerMultiply(){
+  std::cout << "Running testTokenizerMultiply()" << std::endl;
+  Token testToken(TokenType::MULTIPLY, "*", 0,3);
+  auto s = Tokenizer::getInstance().tokenize("a+/*a ",0);
+  assert(testToken == s[3]);
+}
+
+void testTokenizerIdentifier(){
+  std::cout << "Running testTokenizerIdentifier()" << std::endl;
+  Token testToken(TokenType::IDENTIFIER, "a",0,5);
+  auto s = Tokenizer::getInstance().tokenize("asdf a \"asdf\" yay",0);
+  assert(testToken == s[2]);
+}
+
+void testTokenizerDivide(){
+  std::cout << "Running testTokenizerDivide()" << std::endl;
+  Token testToken(TokenType::DIVIDE, "/", 0, 1);
+  auto s = Tokenizer::getInstance().tokenize(" /", 0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerLBRAC(){
+  std::cout << "Running testTokenizerLBRAC()" << std::endl;
+  Token testToken(TokenType::LBRAC, "[", 0,0);
+  auto s = Tokenizer::getInstance().tokenize("[",0);
+  assert(testToken == s[0]);
+}
+
+void testTokenizerRBRAC(){
+  std::cout << "Running testTokenizerRBRAC()" << std::endl;
+  Token testToken(TokenType::RBRAC, "]",0,0);
+  auto s = Tokenizer::getInstance().tokenize("]",0);
+  assert(testToken == s[0]);
+}
+
+void testTokenizerEqual(){
+  std::cout << "Running testTokenizerEqual()" << std::endl;
+  Token testToken(TokenType::EQUAL, "==",0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1==\"asdf\"",0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerNotEqual(){
+  std::cout << "Running testTokenizerNotEqual()" << std::endl;
+  Token testToken(TokenType::NOTEQUAL, "!=",0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1!=\"asdf\"",0);
+  assert(testToken == s[1]);  
+}
+
+void testTokenizerLessEqual(){
+  std::cout << "Running testTokenizerLessEqual()" << std::endl;
+  Token testToken(TokenType::LESSEQUAL, "<=", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1<=\"asdf\"",0);
+  assert(testToken == s[1]);  
+}
+
+void testTokenizerGreaterEqual(){
+  std::cout << "Running testTokenizerGreaterEqual()" << std::endl;
+  Token testToken(TokenType::GREATEREQUAL, ">=", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1>=\"asdf\"",0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerLess(){
+  std::cout << "Running testTokenizerLess()" << std::endl;
+  Token testToken(TokenType::LESS, "<", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1<\"asdf\"",0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerGreater(){
+  std::cout << "Running testTokenizerGreater()" << std::endl;
+  Token testToken(TokenType::GREATER, ">", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1>\"asdf\"",0);
+  assert(testToken == s[1]); 
+}
+
+void testTokenizerAnd(){
+  std::cout << "Running testTokenizerAnd()" << std::endl;
+  Token testToken(TokenType::AND, "&&", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1&&\"asdf\"",0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerOr(){
+  std::cout << "Running testTokenizerOr()" << std::endl;
+  Token testToken(TokenType::OR, "||", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1||\"asdf\"",0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerNot(){
+  std::cout << "Running testTokenizerNot()" << std::endl;
+  Token testToken(TokenType::NOT, "!", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1!\"asdf\"",0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerAssign(){
+  std::cout << "Running testTokenizerAssign()" << std::endl;
+  Token testToken(TokenType::ASSIGN, "=", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1=\"asdf\"",0);
+  assert(testToken == s[1]);
+}
+
+void testTokenizerDot(){
+  std::cout << "Running testTokenizerDot()" << std::endl;
+  Token testToken(TokenType::DOT, ".", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1.\"asdf\"",0);
+  assert(testToken == s[1]); 
+}
+
+void testTokenizerLSBRAC(){
+  std::cout << "Running testTokenizerLSBRAC()" << std::endl;
+  Token testToken(TokenType::LSBRAC, "{", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1{\"asdf\"",0);
+  assert(testToken == s[1]);  
+}
+
+void testTokenizerRSBRAC(){
+  std::cout << "Running testTokenizerRSBRAC()" << std::endl;
+  Token testToken(TokenType::RSBRAC, "}", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1}\"asdf\"",0);
+  assert(testToken == s[1]);  
+}
+
+void testTokenizerComma(){
+  std::cout << "Running testTokenizerComma()" << std::endl;
+  Token testToken(TokenType::COMMA, ",", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1,\"asdf\"",0);
+  assert(testToken == s[1]); 
+}
+
+void testTokenizerColon(){
+  std::cout << "Running testTokenizerColon()" << std::endl;
+  Token testToken(TokenType::COLON, ":", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1:\"asdf\"",0);
+  assert(testToken == s[1]); 
+}
+
+void testTokenizerSemiColon(){
+  std::cout << "Running testTokenizerSemiColon()" << std::endl;
+  Token testToken(TokenType::SCOLON, ";", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1;\"asdf\"",0);
+  assert(testToken == s[1]); 
+}
+
+void testTokenizerError(){
+  std::cout << "Running testTokenizerError()" << std::endl;
+  Token testToken(TokenType::ERROR, "@", 0,2);
+  auto s = Tokenizer::getInstance().tokenize("a1@\"asdf\"~`",0);
+  assert(testToken == s[1]); 
+  assert(s[4].getType() == TokenType::ERROR);
+}
+
+
 
 void test_tokenizer(){
-    testTokenizeComment();
-    testTokenizeWhiteSpace();
-    testTokenizeBoolean();
-    testTokenizerNullLiteral();
-    testTokenizerFunction();
-    testTokenizerReturn();
-    testTokenizerIf();
-    testTokenizerElse();
-    testTokenizerWhile();
-    testTokenizerFor();
-    testTokenizerBreak();
-    testTokenizerContinue();
-    testTokenizerPrint();
-    testTokenizerImport();
-    testTokenizerExternal();
-    testTokenizerInput();
-    testTokenizerExit();
-    testTokenizeString();
-    //testTokenizerRParen();
-    //testTokenizerLParen();
-    testTokensBoolean();
+  testTokenizeComment();
+  testTokenizeWhiteSpace();
+  testTokenizeBoolean();
+  testTokenizerNullLiteral();
+  testTokenizerFunction();
+  testTokenizerReturn();
+  testTokenizerIf();
+  testTokenizerElse();
+  testTokenizerWhile();
+  testTokenizerFor();
+  testTokenizerBreak();
+  testTokenizerContinue();
+  testTokenizerPrint();
+  testTokenizerImport();
+  testTokenizerExternal();
+  testTokenizerInput();
+  testTokenizerExit();
+  testTokenizeString();
+  testTokenizerRParen();
+  testTokenizerLParen();
+  testTokenizerAdd();
+  testTokenizerSubtract();
+  testTokenizerMultiply();
+  testTokenizerIdentifier();
+  testTokenizerDivide();
+  testTokenizerLBRAC();
+  testTokenizerRBRAC();
+  testTokenizerEqual();
+  testTokenizerNotEqual();
+  testTokenizerLessEqual();
+  testTokenizerGreaterEqual();
+  testTokenizerLess();
+  testTokenizerGreater();
+  testTokenizerAnd();
+  testTokenizerOr();
+  testTokenizerNot();
+  testTokenizerAssign();
+  testTokenizerDot();
+  testTokenizerLBRAC();
+  testTokenizerRBRAC();
+  testTokenizerComma();
+  testTokenizerColon();
+  testTokenizerSemiColon();
+  testTokenizerError();
+  std::cout << "All Tokenizer tests passed" << std::endl;
 }
 /*
 patterns = [

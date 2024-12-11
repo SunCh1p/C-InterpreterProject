@@ -2,13 +2,12 @@
 //global list of regex patterns for tokenization
 const std::vector<std::pair<std::regex, TokenType>> patterns = {
   //numbers = 0
-  {std::regex(R"(\/\/[^\n]*)"), TokenType::COMMENT},
+  {std::regex(R"(\#[^\n]*)"), TokenType::COMMENT},
   {std::regex(R"(\s+)"), TokenType::WHITESPACE},
   {std::regex(R"(true|false)"), TokenType::BOOLEAN},
   {std::regex(R"(null)"), TokenType::NULL_LITERAL},
   {std::regex(R"(function)"), TokenType::FUNCTION},
   {std::regex(R"(return)"), TokenType::RETURN},
-  
   {std::regex(R"(if)"), TokenType::IF},
   {std::regex(R"(else)"), TokenType::ELSE},
   {std::regex(R"(while)"), TokenType::WHILE},
@@ -22,7 +21,6 @@ const std::vector<std::pair<std::regex, TokenType>> patterns = {
   {std::regex(R"(exit)"), TokenType::EXIT},
 
   {std::regex(R"((\d+\.\d*)|(\d*\.\d+)|(\d+))"),TokenType::NUMBER},
-  {std::regex(R"([^"\\\s]*)"), TokenType::STRING},
   //operators
   {std::regex(R"(\+)"), TokenType::ADD},
   {std::regex(R"(\-)"), TokenType::SUBTRACT},
@@ -40,7 +38,17 @@ const std::vector<std::pair<std::regex, TokenType>> patterns = {
   {std::regex(R"(!)"), TokenType::NOT},
   {std::regex(R"(\()"), TokenType::LPAREN},
   {std::regex(R"(\))"), TokenType::RPAREN},
-
+  {std::regex(R"(\[)"), TokenType::LBRAC},
+  {std::regex(R"(\])"), TokenType::RBRAC},
+  {std::regex(R"(\{)"), TokenType::LSBRAC},
+  {std::regex(R"(\})"), TokenType::RSBRAC},
+  {std::regex(R"(\.)"), TokenType::DOT},
+  {std::regex(R"(\,)"), TokenType::COMMA},
+  {std::regex(R"(\:)"), TokenType::COLON},
+  {std::regex(R"(\;)"), TokenType::SCOLON},
+  {std::regex(R"([a-zA-Z_][a-zA-Z0-9_]*)"), TokenType::IDENTIFIER},
+  {std::regex(R"(".*?")"), TokenType::STRING},
+  {std::regex(R"(.)"), TokenType::ERROR},
 };
 
 Tokenizer& Tokenizer::getInstance(){

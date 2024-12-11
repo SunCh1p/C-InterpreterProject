@@ -5,51 +5,50 @@
 #include <iostream>
 
 enum class TokenType{
-  COMMENT = 0,
-  WHITESPACE,
-  NUMBER,
-  STRING,
-  BOOLEAN,
-  NULL_LITERAL,
-  FUNCTION,
-  RETURN,
-  IF,
-  ELSE,
-  WHILE,
-  FOR,
-  BREAK,
-  CONTINUE,
-  PRINT,
-  IMPORT,
-  EXTERNAL,
-  INPUT,
-  EXIT,
-  //
-  IDENTIFIER,
-  ADD,
-  SUBTRACT,
+  COMMENT = 0,//
+  WHITESPACE,//
+  NUMBER,//
+  STRING,//
+  BOOLEAN,//
+  NULL_LITERAL,//
+  FUNCTION,//
+  RETURN,//
+  IF,//
+  ELSE,//
+  WHILE,//
+  FOR,//
+  BREAK,//
+  CONTINUE,//
+  PRINT,//
+  IMPORT,//
+  EXTERNAL,//
+  INPUT,//
+  EXIT,//
+  IDENTIFIER,//
+  ADD, //
+  SUBTRACT,//
   MULTIPLY,
-  DIVIDE,
-  LPAREN,
-  RPAREN,
-  LBRAC,
-  RBRAC,
-  EQUAL,
-  NOTEQUAL,
-  LESSEQUAL,
-  GREATEREQUAL,
-  LESS,
-  GREATER,
-  AND,
-  OR,
-  NOT,
-  ASSIGN,
-  DOT,
-  LSBRAC,
-  RSBRAC,
-  COMMA,
-  COLON,
-  SCOLON,
+  DIVIDE,//
+  LPAREN,//
+  RPAREN,//
+  LBRAC,//
+  RBRAC,//
+  EQUAL,//
+  NOTEQUAL, //
+  LESSEQUAL, //
+  GREATEREQUAL,//
+  LESS, //
+  GREATER, //
+  AND, //
+  OR, //
+  NOT, //
+  ASSIGN, //
+  DOT, //
+  LSBRAC,//
+  RSBRAC,//
+  COMMA, //
+  COLON,//
+  SCOLON, //
   ERROR,
 };
 
