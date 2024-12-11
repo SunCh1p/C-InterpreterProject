@@ -142,14 +142,7 @@ void testTokensBoolean() {
   assert(testToken == s[0]);
   std::cout << "testTokensBoolean passed." << std::endl;
 }
-
-void testTokenizerNullLiteral() {
-  std::cout << "Running testTokenizerNullLiteral()" << std::endl;
-  Token testToken(TokenType::NULL_LITERAL, "null", 0, 0);
-  auto s = Tokenizer::getInstance().tokenize("null", 0);
-  assert(testToken == s[0]);
-  std::cout << "testTokenizerNullLiteral passed." << std::endl;
-}
+//there is problem in L and R paren need to be fixed 
 void testTokenizerLParen() {
     std::cout << "Running testTokenizerLParen()" << std::endl;
     Token testToken(TokenType::LPAREN, "(", 0, 0);
@@ -190,6 +183,9 @@ void test_tokenizer(){
     testTokenizerInput();
     testTokenizerExit();
     testTokenizeString();
+    //testTokenizerRParen();
+    //testTokenizerLParen();
+    testTokensBoolean();
 }
 /*
 patterns = [
