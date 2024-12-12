@@ -32,8 +32,6 @@ std::string Factor::pAccept(Visitor* visitor) const{
 std::string IntLiteral::pAccept(Visitor* visitor) const{
   return visitor->pVisit(this);
 }
-
-
 //evaluator visitor functions
 int Evaluator::visit(const Expression* expression){
   int left = expression->getLeft()->accept(this);
